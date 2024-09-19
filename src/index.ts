@@ -3,6 +3,7 @@ import fs from "fs-extra";
 import * as gitUtils from "./gitUtils";
 import { runPublish, runVersion } from "./run";
 import readChangesetState from "./readChangesetState";
+import { NewChangeset } from "@changesets/types";
 
 const getOptionalInput = (name: string) => core.getInput(name) || undefined;
 
@@ -36,37 +37,29 @@ async function main() {
   await setGitHubCredentials(githubToken);
 
   const { changesets } = await readChangesetState();
+  core.setOutput("published", "false");
+  core.setOutput("publishedPackages", "[]");
+  await handleChangesetCases(githubToken, changesets);
+}
+
+async function handleChangesetCases(
+  githubToken: string,
+  changesets: NewChangeset[],
+) {
   const publishScript = core.getInput("publish");
+  const hasPublishScript = !!publishScript;
+  
   const hasChangesets = changesets.length !== 0;
   const hasNonEmptyChangesets = changesets.some(
     (changeset) => changeset.releases.length > 0
   );
-  const hasPublishScript = !!publishScript;
 
-  core.setOutput("published", "false");
-  core.setOutput("publishedPackages", "[]");
   core.setOutput("hasChangesets", String(hasChangesets));
 
-  await handleChangesetCases(
-    hasChangesets,
-    hasNonEmptyChangesets,
-    hasPublishScript,
-    publishScript,
-    githubToken
-  );
-}
-
-async function handleChangesetCases(
-  hasChangesets: boolean,
-  hasNonEmptyChangesets: boolean,
-  hasPublishScript: boolean,
-  publishScript: string,
-  githubToken: string
-) {
   if (!hasChangesets && !hasPublishScript) {
     await handleNoChangesetsNoPublishScript();
   } else if (!hasChangesets && hasPublishScript) {
-    await handleNoChangesetsHasPublishScript(publishScript, githubToken);
+    await doPublish(publishScript, githubToken);
   } else if (hasChangesets && !hasNonEmptyChangesets) {
     await handleEmptyChangesets();
   } else if (hasChangesets) {
@@ -78,7 +71,7 @@ async function handleNoChangesetsNoPublishScript() {
   core.info("No changesets found");
 }
 
-async function handleNoChangesetsHasPublishScript(
+async function doPublish(
   publishScript: string,
   githubToken: string
 ) {
@@ -140,13 +133,16 @@ async function setupNpmrc() {
   const userNpmrcPath = `${process.env.HOME}/.npmrc`;
   const registry = core.getInput("registry");
   if (fs.existsSync(userNpmrcPath)) {
-    await processExisting(userNpmrcPath, registry);
+
+    await processUserNpmrc(userNpmrcPath, registry);
   } else {
+    core.info("No user .npmrc file found. Creating one...");
     createNpmrcFile(userNpmrcPath, registry);
   }
 }
 
-async function processExisting(userNpmrcPath: string, registry: string) {
+async function processUserNpmrc(userNpmrcPath: string, registry: string) {
+  core.info("User .npmrc file found. Processing...");
   const userNpmrcContent = await fs.readFile(userNpmrcPath, "utf8");
   const authLine = userNpmrcContent
     .split("\n")
