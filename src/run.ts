@@ -94,23 +94,7 @@ async function createRelease(
   }
 }
 
-type PublishOptions = {
-  script: string;
-  githubToken: string;
-  createGithubReleases: boolean;
-  cwd?: string;
-};
 
-type PublishedPackage = { name: string; version: string };
-
-type PublishResult =
-  | {
-      published: true;
-      publishedPackages: PublishedPackage[];
-    }
-  | {
-      published: false;
-    };
 
 export async function runPublish({
   script,
@@ -470,3 +454,22 @@ type RunVersionResult = {
 };
 
 type OctokitInstance = ReturnType<typeof setupOctokit>;
+
+
+type PublishOptions = {
+  script: string;
+  githubToken: string;
+  createGithubReleases: boolean;
+  cwd?: string;
+};
+
+type PublishedPackage = { name: string; version: string };
+
+type PublishResult =
+  | {
+  published: true;
+  publishedPackages: PublishedPackage[];
+}
+  | {
+  published: false;
+};
