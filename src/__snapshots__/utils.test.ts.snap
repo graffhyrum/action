@@ -1,24 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`it sorts the things right 1`] = `
-[
-  {
-    "highestLevel": 3,
-    "name": "c",
-    "private": false,
-  },
-  {
-    "highestLevel": 1,
-    "name": "b",
-    "private": false,
-  },
-  {
-    "highestLevel": 3,
-    "name": "a",
-    "private": true,
-  },
-]
-`;
+// Bun Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`it works 1`] = `
 "### Major Changes
@@ -42,4 +22,24 @@ exports[`it works 2`] = `
 
     Move frontmatter in docs into comments
 "
+`;
+
+exports[`it sorts the things right 1`] = `
+[
+  {
+    "highestLevel": 3,
+    "name": "c",
+    "private": false,
+  },
+  {
+    "highestLevel": 1,
+    "name": "b",
+    "private": false,
+  },
+  {
+    "highestLevel": 3,
+    "name": "a",
+    "private": true,
+  },
+]
 `;
