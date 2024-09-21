@@ -123,8 +123,12 @@ async function handleHasChangesets(
 
 async function setGitHubCredentials(githubToken: string) {
   core.info("Setting GitHub credentials");
+  const home = process.env.HOME;
+  if (!home) {
+    throw new Error("HOME environment variable not set");
+  }
   await fs.writeFile(
-    `${process.env.HOME}/.netrc`,
+    `${home}/.netrc`,
     `machine github.com\nlogin github-actions[bot]\npassword ${githubToken}`
   );
 }
