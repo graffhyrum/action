@@ -1,7 +1,7 @@
 import path from "path";
 import { getChangelogEntry, sortTheThings } from "./utils.js";
 import fs from "fs";
-import { getLevel, ReleaseLevelKey } from "./releaseLevels.js";
+import { getLevel } from "./releaseLevels.js";
 
 const filePath = path.join(__dirname, "testlog.md");
 let changelog = fs.readFileSync(filePath, "utf-8");

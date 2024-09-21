@@ -21,7 +21,7 @@ jobs:
         run: bun i --frozen-lockfile
 
       - name: Build
-        run: bun run build
+        run: bun run build:debug
 
       - name: Create Release Pull Request or Publish
         id: changesets
