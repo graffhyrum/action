@@ -1,5 +1,19 @@
 # @changesets/action
 
+## 2.3.0
+
+### Minor Changes
+
+- [`dd6eb9f92a546bf6e66cce8830c45264b426a398`](https://github.com/changesets/action/commit/dd6eb9f92a546bf6e66cce8830c45264b426a398) Thanks [@graffhyrum](https://github.com/graffhyrum)! - changes project module to cjs to address issue with dep imports
+
+### Patch Changes
+
+- [`dd6eb9f92a546bf6e66cce8830c45264b426a398`](https://github.com/changesets/action/commit/dd6eb9f92a546bf6e66cce8830c45264b426a398) Thanks [@graffhyrum](https://github.com/graffhyrum)! - chore: allows dependabot to use unfrozen lockfile in CI
+
+- [`50ab6d7a107b896f3f7383b09983791c77345055`](https://github.com/changesets/action/commit/50ab6d7a107b896f3f7383b09983791c77345055) Thanks [@graffhyrum](https://github.com/graffhyrum)! - add error handling to start of GH cred builder since there are errors in the CI logs
+
+- [`50ab6d7a107b896f3f7383b09983791c77345055`](https://github.com/changesets/action/commit/50ab6d7a107b896f3f7383b09983791c77345055) Thanks [@graffhyrum](https://github.com/graffhyrum)! - add missing build to ci action
+
 ## 2.2.0
 
 ### Minor Changes
