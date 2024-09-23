@@ -15,8 +15,17 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
 
+      - name: Determine if Dependabot
+        id: dependabot
+        run: echo "is_dependabot=$(echo ${{ github.actor }} | grep -q 'dependabot' && echo true || echo false)" >> $GITHUB_OUTPUT
+
       - name: Install Dependencies
-        run: bun i --frozen-lockfile
+        run: |
+          if [ "${{ steps.dependabot.outputs.is_dependabot }}" = "true" ]; then
+            bun i
+          else
+            bun i --frozen-lockfile
+          fi
 
       - name: Build
         run: bun build
