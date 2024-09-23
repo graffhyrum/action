@@ -1,5 +1,11 @@
 # @changesets/action
 
+## 2.3.1
+
+### Patch Changes
+
+- fixes some CI bugs and adds a readme for using local CI testing
+
 ## 2.3.0
 
 ### Minor Changes
